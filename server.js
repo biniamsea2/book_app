@@ -11,11 +11,11 @@ app.set('view engine', 'ejs');
 
 
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static('./public'));
 
 app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 
 
 app.get('/', (request, response) => {
-  response.render('./views/pages/index');
+  response.render('../public/views/pages/index');
 })
