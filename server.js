@@ -29,6 +29,9 @@ app.post('/searches', searchForBook)
 
 
 
+//catch-all
+app.get('*', catchAll)
+
 
 
 
@@ -77,7 +80,7 @@ function searchForBook(request, response){
       const formattedBooks = bookResults.splice(0, 10).map(banana => {
 
         const regex = /^(https)\S*/gi
-        if(regex.test(banana.selfLink)){
+        if (regex.test(banana.selfLink)) {
           let book = new Book(banana)
 
           return book
@@ -85,5 +88,14 @@ function searchForBook(request, response){
       })
       console.log(formattedBooks.length)
       response.send(formattedBooks)
-    }).catch(error => console.error(error))
+    }).catch(error => {
+      console.error(error)
+      response.redirect('*')
+    })
+}
+
+
+
+function catchAll(request, response) {
+  response.send('sorry, something went wrong.')
 }

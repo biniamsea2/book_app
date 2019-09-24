@@ -42,8 +42,8 @@ Number and name of 4. As a user, I want to view any error messages that occur du
 
 Estimate of time needed to complete: 30 min
 
-Start time: 1:43 am
+Start time: 1:25 am
 
-Finish time: 
+Finish time: 1:51 pm
 
-Actual time needed to complete: 
+Actual time needed to complete:  26 min
