@@ -17,5 +17,5 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 
 
 app.get('/', (request, response) => {
-  response.render('./views/pages/index.ejs');
+  response.render('./views/pages/index');
 })
