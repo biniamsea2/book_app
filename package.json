@@ -2,7 +2,7 @@
   "name": "book_app",
   "version": "1.0.0",
   "description": "Biniam & Zerek",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
