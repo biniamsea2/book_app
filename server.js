@@ -56,29 +56,34 @@ function search(request, response){
 function searchForBook(request, response){
   // console.log(request.body)
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  const searchingFor = request.body.search[1]
-  if(request.body.search[0] === 'title'){
+  console.log(request.body.search)
+  const searchingby = request.body.search[1];
+  const searchingFor = request.body.search[0]
+  if(searchingby === 'title'){
     const query = `+intitle:${searchingFor}`
     url= url+query;
-  }else{
+  }else if(searchingby==='author'){
     const query = `+inauthor:${searchingFor}`
     url = url+query;
   }
+  //testing api request
+  console.log(url)
 
   //Now superagent uses the formatted url for api request
   superagent.get(url)
     .then(result => {
       console.log('got results')
-      // console.log(result.body.items[0])
       const bookResults = result.body.items;
       const formattedBooks = bookResults.splice(0, 10).map(banana => {
-        console.log('reduced to 10')
-        console.log(bookResults)
+
         const regex = /^(https)\S*/gi
         if(regex.test(banana.selfLink)){
-          return new Book(banana)
+          let book = new Book(banana)
+
+          return book
         }
       })
+      console.log(formattedBooks.length)
       response.send(formattedBooks)
-    })
+    }).catch(error => console.error(error))
 }
