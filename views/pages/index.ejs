@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=
-    , initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
-    <link rel="stylesheet" href="/styles/reset.css">
-    <link rel="stylesheet" href="/styles/base.css">
-    <link rel="stylesheet" href="/styles/layout.css">
-    <link rel="stylesheet" href="/styles/modules.css">
-</head>
+<%- '../partials/head.ejs' %>
 
 <body>
     <h1>Hello World</h1>
@@ -24,7 +10,6 @@
                 <input type="radio" name="search" value="title" required>
             </label>
         </fieldset>
-
         <fieldset>
             <label for="author">
                 <span>Author</span>
@@ -33,6 +18,20 @@
         </fieldset>
         <button type="submit">Search Book</button>
     </form>
+
+
+
+
+    <h1>Book Results</h1>
+    <p><a href="/">Home</a></p>
+    <ul>
+      <% sqlKey.forEach(value => { %>
+      <img src = "<%= value.thumbnail%>"> 
+      <li><%= value.title %></li>
+      <li><%= value.author %></li>
+      <li><%= value.description %></li>
+      <% }) %>
+    </ul>
 </body>
 
 </html>
