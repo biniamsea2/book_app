@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS books_app;
+create database if not exists books_app;
+\c books_app;
+
 DROP TABLE IF EXISTS books;
 
 CREATE TABLE IF NOT EXISTS books(
