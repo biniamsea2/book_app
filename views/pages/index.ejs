@@ -23,6 +23,7 @@
 
 
     <h1>Book Results</h1>
+    <p>Total Number of Books: <%= sqlKey.length %></p>
     <p><a href="/">Home</a></p>
     <ul>
       <% sqlKey.forEach(value => { %>
@@ -32,6 +33,9 @@
       <li><%= value.description %></li>
       <% }) %>
     </ul>
+
+
+
 </body>
 
 </html>

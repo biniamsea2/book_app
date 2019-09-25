@@ -32,7 +32,8 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 
 
 //===== Routes =======//
-// app.get('/', search)
+// need to create link to /search
+app.get('/search', search)
 app.get('/', showSaved)
 app.post('/searches', searchForBook)
 
@@ -68,7 +69,7 @@ function Book(info){
 
 // ===== Callback Functions for Routes ======//
 function search(request, response){
-  response.render('../public/views/pages/index')
+  response.render('./pages/searches/new')
 }
 
 function searchForBook(request, response){

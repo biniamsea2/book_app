@@ -69,8 +69,8 @@ Number and name of feature 1. As a user, I want all of my saved books to be disp
 
 Estimate of time needed to complete: 1 hour
 
-Start time: 10:45 pm
+Start time: 9:45 am
 
-Finish time:  : pm
+Finish time: 1:38 pm
 
-Actual time needed to complete:  
+Actual time needed to complete:  3 hours including lunch
