@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+  <h1>Our Books</h1>
+  <p><a href="/">Home</a></p>
+  <ul>
+    <% books.forEach(value => { %>
+    <img src = "<%= value.thumbnail%>"> 
+    <li><%= value.title %></li>
+    <li><%= value.author %></li>
+    <li><%= value.description %></li>
+    <% }) %>
+  </ul>
+
+
+</body>
+
+</html>

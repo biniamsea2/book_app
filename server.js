@@ -12,7 +12,7 @@ const superagent = require('superagent');
 
 app.set('view engine', 'ejs');
 app.use(cors());
-app.use(express.static('./public'));
+app.use(express.static('/public'));
 
 // ======= MiddleWare =========//
 app.use(express.urlencoded({extended: true}));
@@ -35,15 +35,22 @@ app.get('*', catchAll)
 
 
 
+
+
+
+//===== Global Variables ======//
+// const booksArr = [];
+
+
 // ====== Constructor Function =======/
 
 function Book(info){
   this.title = info.volumeInfo.title;
   this.author = info.volumeInfo.authors[0];
   this.description = info.volumeInfo.description;
+  this.thumbnail=info.volumeInfo.imageLinks.thumbnail;
 }
 
-// add image to the book constructor
 
 
 
@@ -77,17 +84,18 @@ function searchForBook(request, response){
     .then(result => {
       console.log('got results')
       const bookResults = result.body.items;
+      console.log('received ', bookResults.length, ' results')
       const formattedBooks = bookResults.splice(0, 10).map(banana => {
 
         const regex = /^(https)\S*/gi
         if (regex.test(banana.selfLink)) {
           let book = new Book(banana)
-
           return book
         }
       })
-      console.log(formattedBooks.length)
-      response.send(formattedBooks)
+      console.log('results include: ', formattedBooks)
+      console.log('total results: ',formattedBooks.length)
+      response.render('./pages/searches/show', {books:formattedBooks})
     }).catch(error => {
       console.error(error)
       response.redirect('*')
