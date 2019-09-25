@@ -43,7 +43,7 @@ function Book(info){
   this.description = info.volumeInfo.description;
 }
 
-
+// add image to the book constructor
 
 
 
