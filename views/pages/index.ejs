@@ -33,6 +33,18 @@
         </fieldset>
         <button type="submit">Search Book</button>
     </form>
+
+
+    <h1>Book Results</h1>
+    <p><a href="/">Home</a></p>
+    <ul>
+      <% sqlKey.forEach(value => { %>
+      <img src = "<%= value.thumbnail%>"> 
+      <li><%= value.title %></li>
+      <li><%= value.author %></li>
+      <li><%= value.description %></li>
+      <% }) %>
+    </ul>
 </body>
 
 </html>

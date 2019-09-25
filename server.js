@@ -7,12 +7,21 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 const cors = require('cors');
 require('ejs');
+const pg = require('pg');
 
 const superagent = require('superagent');
 
 app.set('view engine', 'ejs');
 app.use(cors());
 app.use(express.static('/public'));
+
+
+
+const client = new pg.Client(process.env.DATABASE_URL);
+client.connect();
+client.on('error', err => console.error(err));
+
+
 
 // ======= MiddleWare =========//
 app.use(express.urlencoded({extended: true}));
@@ -23,7 +32,8 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 
 
 //===== Routes =======//
-app.get('/', search)
+// app.get('/', search)
+app.get('/', showSaved)
 app.post('/searches', searchForBook)
 
 
@@ -53,8 +63,6 @@ function Book(info){
 
 
 
-
-// ===== Prototype ======
 
 
 
@@ -93,7 +101,7 @@ function searchForBook(request, response){
           return book
         }
       })
-      console.log('results include: ', formattedBooks)
+      // console.log('results include: ', formattedBooks)
       console.log('total results: ',formattedBooks.length)
       response.render('./pages/searches/show', {books:formattedBooks})
     }).catch(error => {
@@ -102,8 +110,21 @@ function searchForBook(request, response){
     })
 }
 
+function showSaved(request, response) {
+  let sql = `SELECT * FROM books;`;
+  client.query(sql)
+    .then(sqlResults => {
+      let sqlResponse = sqlResults.rows;
+      response.render('./pages/index', {sqlKey:sqlResponse});
+    })
+}
 
 
+
+
+
+
+//==== Catch -All =====/
 function catchAll(request, response) {
   response.send('sorry, something went wrong.')
 }
