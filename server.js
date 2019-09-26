@@ -128,6 +128,7 @@ function specificBook(request, response) {
   let values = [request.params.book_id];
 
   return client.query(sql, values).then(result => {
+    console.log(result)
     response.render('pages/searches/new', { books: result.rows[0] })
   })
     .catch(error => {
