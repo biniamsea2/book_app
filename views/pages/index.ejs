@@ -1,4 +1,4 @@
-<%- '../partials/head.ejs' %>
+<%- include ../partials/head.ejs %>
 
 <body>
     <h1>Hello World</h1>
@@ -31,6 +31,8 @@
       <li><%= value.title %></li>
       <li><%= value.author %></li>
       <li><%= value.description %></li>
+      <li><%= value.book_id %></li>
+
       <% }) %>
     </ul>
 
