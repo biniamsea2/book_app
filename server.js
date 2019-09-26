@@ -3,17 +3,15 @@
 // ==== Dependancies =====//
 const express = require('express');
 const app = express();
-require('dotenv').config();
-const PORT = process.env.PORT || 3001;
-const cors = require('cors');
-require('ejs');
-const pg = require('pg');
-
 const superagent = require('superagent');
-
-app.set('view engine', 'ejs');
+const pg = require('pg');
+const cors = require('cors');
+require('dotenv').config();
+require('ejs');
 app.use(cors());
-app.use(express.static('/public'));
+app.set('view engine', 'ejs');
+
+const PORT = process.env.PORT || 3001;
 
 
 
@@ -24,6 +22,7 @@ client.on('error', err => console.error(err));
 
 
 // ======= MiddleWare =========//
+app.use(express.static('/public'));
 app.use(express.urlencoded({extended: true}));
 
 
@@ -36,11 +35,12 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 app.get('/search', search)
 app.get('/', showSaved)
 app.post('/searches', searchForBook)
+app.get('/thing', requestThing)
 
 
 
 
-//catch-all
+//catch for all un-specified route requests
 app.get('*', catchAll)
 
 
@@ -120,12 +120,14 @@ function showSaved(request, response) {
     })
 }
 
+function requestThing(request, response){
 
+}
 
 
 
 
 //==== Catch -All =====/
 function catchAll(request, response) {
-  response.send('sorry, something went wrong.')
+  response.render('./pages/error')
 }
