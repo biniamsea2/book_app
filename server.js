@@ -58,7 +58,7 @@ app.get('*', catchAll)
 function Book(info){
   this.title = info.volumeInfo.title;
   this.author = info.volumeInfo.authors[0];
-  this.description = info.volumeInfo.description;
+  this.summary = info.volumeInfo.summary;
   this.thumbnail=info.volumeInfo.imageLinks.thumbnail;
   this.book_id = info.id
 }
@@ -121,7 +121,22 @@ function showSaved(request, response) {
     })
 }
 
-function specificBook(request, response){
+//show detailed page for specified book id
+function specificBook(request, response) {
+  let sql = 'SELECT * FROM books WHERE book_id = $1;';
+  // console.log('the params is: ', request.params);
+  let values = [request.params.id];
+
+  return client.query(sql, values).then(result => {
+    // console.log('result is: ', result.rows[0])
+    let tempArr = [];
+    tempArr.push(result.rows[0])
+    console.log('tempArr is: ', tempArr)
+    response.render('pages/searches/new', { sqlResults: tempArr })
+  })
+    .catch(error => {
+      handleError(error, response)
+    })
 
 }
 
@@ -129,6 +144,12 @@ function specificBook(request, response){
 
 
 
+// ===== Handle Error Function ======//
+
+function handleError(error, response){
+  response.render('pages/error');
+  console.error(error)
+}
 
 //==== Catch -All =====/
 function catchAll(request, response) {

@@ -1,0 +1,9 @@
+<% sqlResults.forEach(value => { %>
+    <ul>
+        <img src = "<%= value.image_url%>">
+        <li><%= value.title %> </li>
+        <li><%= value.author %> </li>
+        <li><%= value.summary %> </li>
+        <li><%= value.book_id %> </li>
+    </ul>
+    <% }) %>
