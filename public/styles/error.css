@@ -1,0 +1,15 @@
+body {
+    animation: colorchange 1s infinite;
+    -webkit-animation: colorchange 1s inifintite;
+}
+
+@keyframes colorchange{
+    0%   {background: red;}
+    25%  {background: yellow;}
+    50%  {background: blue;}
+    75%  {background: green;}
+    100% {background: red;}
+}
+h1{
+    color:colorchange 2s infinite;
+}
