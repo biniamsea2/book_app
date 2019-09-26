@@ -17,10 +17,10 @@
 
   </ul>
   
-  <a href="/books/<%=value.book_id %>"></a>
-  <form id="save-book" action="/books/<%=value.book_id %>" method="POST">
+  <a href="/books/<%=value.book_id %>"><button>View more details</button></a>
+  <form id="save-book" action="/add/<%= value.book_id %>" method="POST">
     <fieldset>
-      <input type="hidden" name="book_id" value="<% value.book_id %>" >
+      <input type="hidden" name="isbn" value="<% value.book_id %>" >
       <button type="submit">Add to library</button>
     </fieldset>
   </form>  
