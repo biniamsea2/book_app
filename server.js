@@ -36,6 +36,7 @@ app.get('/search', search)
 app.get('/', showSaved)
 app.post('/searches', searchForBook)
 app.get('/books/:id', specificBook)
+app.post('/add/:id', saveBook)
 
 
 
@@ -140,6 +141,20 @@ function specificBook(request, response) {
 
 }
 
+//save targetted book (from results) to database
+function saveBook(request, response){
+  const selectedBook = request.body
+  // console.log('Attempting to save book')
+  console.log('things received: ',selectedBook)
+
+  let sql='INSERT INTO books (author, title, book_id, image_url, summary) VALUES ($1, $2, $3, $4, $5);';
+  let sqlArray = [selectedBook.author, selectedBook.title, selectedBook.book_id, selectedBook.thumbnail_url, selectedBook.summary]
+
+  client.query(sql, sqlArray).then(result => {
+    
+  })
+
+}
 
 
 
