@@ -74,3 +74,70 @@ Start time: 9:45 am
 Finish time: 1:38 pm
 
 Actual time needed to complete:  3 hours including lunch
+
+
+
+
+Number and name of feature 2. As a user, I want to request information about a single book so that I can view its additional details and share it by URL.
+
+Estimate of time needed to complete: 2 hours
+
+Start time: 9:45 am
+
+Finish time:  
+
+Actual time needed to complete:  
+
+
+
+Number and name of feature 3. As a user, I want the ability to change details of a single book from the search results so that I can write in my custom details and assign the book to a bookshelf.
+
+Estimate of time needed to complete: 2 hours
+
+Start time: 9:45 am
+
+Finish time:  
+
+Actual time needed to complete:  
+
+
+
+Number and name of feature 4. As a user, I want the ability to add new books to my application so that my collection continues to grow.
+
+Estimate of time needed to complete: 2 hours
+
+Start time: 9:45 am
+
+Finish time:  
+
+Actual time needed to complete:  
+
+
+
+
+Number and name of feature 5. As a user, I want the application to be designed in a consistent way so that I do not experience any down time or slow load times.
+
+Estimate of time needed to complete: 2 hours
+
+Start time: 9:45 am
+
+Finish time:  
+
+Actual time needed to complete:  
+
+
+
+
+
+
+Number and name of feature 6. As a user, I want a simple, clean-looking UI so that my application is easy to navigate.
+
+Estimate of time needed to complete: 2 hours
+
+Start time: 9:45 am
+
+Finish time:  
+
+Actual time needed to complete:  
+
+

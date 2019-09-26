@@ -30,11 +30,13 @@
       <img src = "<%= value.thumbnail%>"> 
       <li><%= value.title %></li>
       <li><%= value.author %></li>
-      <li><%= value.description %></li>
+      <li><%= value.summary %></li>
       <li><%= value.book_id %></li>
 
+      <a href="/books/<%=value.book_id %>"><button>View more details</button></a>
       <% }) %>
     </ul>
+
 
 
 
