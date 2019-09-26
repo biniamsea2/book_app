@@ -35,7 +35,7 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 app.get('/search', search)
 app.get('/', showSaved)
 app.post('/searches', searchForBook)
-app.get('/thing', requestThing)
+app.get('/books/:id', specificBook)
 
 
 
@@ -60,6 +60,7 @@ function Book(info){
   this.author = info.volumeInfo.authors[0];
   this.description = info.volumeInfo.description;
   this.thumbnail=info.volumeInfo.imageLinks.thumbnail;
+  this.book_id = info.id
 }
 
 
@@ -120,9 +121,11 @@ function showSaved(request, response) {
     })
 }
 
-function requestThing(request, response){
+function specificBook(request, response){
 
 }
+
+
 
 
 

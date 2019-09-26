@@ -12,10 +12,20 @@
     <li><%= value.title %></li>
     <li><%= value.author %></li>
     <li><%= value.description %></li>
-    <% }) %>
+    <!-- <li><%= value.book_id %></li> -->
+
+
   </ul>
-
-
+  
+  <a href="/books/<%=myBooks[i].isbn %>"><button>View more details</button></a>
+  <form id="save-book" action="/add/<%= myBooks[i].isbn %>" method="POST">
+    <fieldset>
+      <input type="hidden" name="isbn" value="<% myBooks[i].isbn %>" >
+      <button type="submit">Add to library</button>
+    </fieldset>
+  </form>  
+  <% }) %>
+  
+  
 </body>
-
 </html>
