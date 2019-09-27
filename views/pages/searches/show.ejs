@@ -8,23 +8,19 @@
   <p><a href="/">Home</a></p>
   <ul>
     <% books.forEach(value => { %>
-    <img src = "<%= value.thumbnail %>"> 
+    <img src = "<%= value.thumbnail%>"> 
     <li><%= value.title %></li>
     <li><%= value.author %></li>
     <li><%= value.description %></li>
-    <!-- <li><%= value.book_id %></li> -->
 
 
   </ul>
-  <form id="save-book" action="/add/<%= value.book_id %>" method="POST">
+  
+  <a href="/books/<%=value.book_id %>"><button>View more details</button></a>
+  <form id="save-book" action="/books/<%=value.book_id %>" method="POST">
     <fieldset>
-      <input type="hidden" name="thumbnail_url" value="<%= value.thumbnail %>" >
-      <input type="hidden" name="isbn" value="<%= value.book_id %>" >
-      <input type="hidden" name="title" value="<%= value.title %>" >
-      <input type="hidden" name="author" value="<%= value.author %>" >
-      <input type="hidden" name="summary" value="<%= value.description %>" >
-
-      <input type="submit" value ='Add to library' >
+      <input type="hidden" name="book_id" value="<% value.book_id %>" >
+      <button type="submit">Add to library</button>
     </fieldset>
   </form>  
   <% }) %>
