@@ -26,25 +26,27 @@
 
 
 
+    <% if(sqlKey=false){ %>
 
-    <h1>Book Results</h1>
-    <p>Total Number of Books: <%= sqlKey.length %></p>
-    <p><a href="/">Home</a></p>
-    <ul>
-      <% sqlKey.forEach(value => { %>
-      <img src = "<%= value.thumbnail %>"> 
-      <li><%= value.title %></li>
-      <li><%= value.author %></li>
-      <li><%= value.summary %></li>
-      <li><%= value.book_id %></li>
+        <h1>Book Results</h1>
+        <p>Total Number of Books: <%= sqlKey.length %></p>
+        <p><a href="/">Home</a></p>
 
-      <a href="/books/<%=value.book_id %>"><button>View more details</button></a>
-      <% }) %>
-    </ul>
+        <% sqlKey.forEach(value => { %>
+            <ul>
+                <img src = "<%= value.thumbnail %>"> 
+                <li><%= value.title %></li>
+                <li><%= value.author %></li>
+                <li><%= value.summary %></li>
+                <li><%= value.book_id %></li>
 
+                <a href="/books/<%=value.book_id %>"><button>View more details</button></a>
+            </ul>
+        <% }) %>
+    <% }else if(!sqlKey){ %>
 
-
+        <p>Nothing in library? Search a book now!</p>
+    <% } %>
 
 </body>
-
 </html>

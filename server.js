@@ -55,10 +55,10 @@ app.get('*', catchAll)
 // ====== Constructor Function =======/
 
 function Book(info){
-  this.title = info.volumeInfo.title;
-  this.author = info.volumeInfo.authors[0];
-  this.summary = info.volumeInfo.summary;
-  this.thumbnail=info.volumeInfo.imageLinks.thumbnail;
+  this.title = info.volumeInfo.title ||'Title not available.';
+  this.author = info.volumeInfo.authors[0] || 'Author not available.';
+  this.summary = info.volumeInfo.summary || 'No Summary Available';
+  this.thumbnail=info.volumeInfo.imageLinks.thumbnail || 'https://i.imgur.com/J5LVHEL.jpg'
   this.book_id = info.id
 }
 
@@ -74,8 +74,9 @@ function search(request, response){
 
 function searchForBook(request, response){
   // console.log(request.body)
+  console.log('inside searchforbook')
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  console.log(request.body.search)
+  console.log('logging search',request.body.search)
   const searchingby = request.body.search[1];
   const searchingFor = request.body.search[0]
   if(searchingby === 'title'){
@@ -116,7 +117,14 @@ function showSaved(request, response) {
   client.query(sql)
     .then(sqlResults => {
       let sqlResponse = sqlResults.rows;
-      response.render('./pages/index', {sqlKey:sqlResponse});
+      console.log('sqlResponse for index: ',sqlResponse)
+      if(sqlResponse.length > 0){
+        response.render('./pages/index', {sqlKey:sqlResponse});
+      }else{
+        response.render('./pages/index')
+      }
+    }).catch(error => {
+      handleError(error, response)
     })
 }
 
@@ -146,7 +154,7 @@ function saveBook(request, response){
   // console.log(selectedBook.book_id)
   // console.log('Attempting to save book')
   console.log('things received: ',selectedBook)
-  let sql='INSERT INTO books (author, title, book_id, image_url, summary) VALUES ($1, $2, $3, $4, $5);';
+  let sql='INSERT INTO books (author, title, book_id, thumbnail, summary) VALUES ($1, $2, $3, $4, $5);';
   let sqlArray = [selectedBook.author, selectedBook.title, specificBookId, selectedBook.thumbnail, selectedBook.summary]
 
   client.query(sql, sqlArray).then(sqlResults => {
