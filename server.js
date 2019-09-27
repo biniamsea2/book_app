@@ -3,15 +3,16 @@
 // ==== Dependancies =====//
 const express = require('express');
 const app = express();
+require('dotenv').config();
+const PORT = process.env.PORT || 3001;
+const cors = require('cors');
 const superagent = require('superagent');
 const pg = require('pg');
-const cors = require('cors');
-require('dotenv').config();
-require('ejs');
 app.use(cors());
+app.use(express.static('public'));
+require('ejs');
 app.set('view engine', 'ejs');
 
-const PORT = process.env.PORT || 3001;
 
 
 
@@ -22,7 +23,6 @@ client.on('error', err => console.error(err));
 
 
 // ======= MiddleWare =========//
-app.use(express.static('/public'));
 app.use(express.urlencoded({extended: true}));
 
 
@@ -151,7 +151,7 @@ function saveBook(request, response){
   let sqlArray = [selectedBook.author, selectedBook.title, selectedBook.book_id, selectedBook.thumbnail_url, selectedBook.summary]
 
   client.query(sql, sqlArray).then(result => {
-    
+
   })
 
 }
@@ -162,7 +162,7 @@ function saveBook(request, response){
 // ===== Handle Error Function ======//
 
 function handleError(error, response){
-  response.render('pages/error');
+  response.status(500).render('pages/error');
   console.error(error)
 }
 
