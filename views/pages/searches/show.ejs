@@ -18,8 +18,8 @@
   </ul>
   <form id="save-book" action="/add/<%= value.book_id %>" method="POST">
     <fieldset>
-      <input type="hidden" name="thumbnail_url" value="<%= value.thumbnail %>" >
-      <input type="hidden" name="isbn" value="<%= value.book_id %>" >
+      <input type="hidden" name="thumbnail" value="<%= value.thumbnail %>" >
+      <input type="hidden" name="book_id" value="<%= value.book_id %>" >
       <input type="hidden" name="title" value="<%= value.title %>" >
       <input type="hidden" name="author" value="<%= value.author %>" >
       <input type="hidden" name="summary" value="<%= value.description %>" >

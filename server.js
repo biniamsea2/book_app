@@ -39,8 +39,6 @@ app.get('/books/:id', specificBook)
 app.post('/add/:id', saveBook)
 
 
-
-
 //catch for all un-specified route requests
 app.get('*', catchAll)
 
@@ -81,11 +79,11 @@ function searchForBook(request, response){
   const searchingby = request.body.search[1];
   const searchingFor = request.body.search[0]
   if(searchingby === 'title'){
-    const query = `+intitle:${searchingFor}`
-    url= url+query;
+    const query = `intitle:${searchingFor}`
+    url += query;
   }else if(searchingby==='author'){
-    const query = `+inauthor:${searchingFor}`
-    url = url+query;
+    const query = `inauthor:${searchingFor}`
+    url += query;
   }
   //testing api request
   console.log(url)
@@ -133,27 +131,30 @@ function specificBook(request, response) {
     let tempArr = [];
     tempArr.push(result.rows[0])
     console.log('tempArr is: ', tempArr)
-    response.render('pages/searches/new', { sqlResults: tempArr })
+    response.render('pages/detail', { sqlResults: tempArr })
   })
     .catch(error => {
       handleError(error, response)
     })
-
 }
 
 //save targetted book (from results) to database
 function saveBook(request, response){
   const selectedBook = request.body
+  const specificBookId = request.params.id;
+  console.log('specificBookId is: ',specificBookId)
+  // console.log(selectedBook.book_id)
   // console.log('Attempting to save book')
   console.log('things received: ',selectedBook)
-
   let sql='INSERT INTO books (author, title, book_id, image_url, summary) VALUES ($1, $2, $3, $4, $5);';
-  let sqlArray = [selectedBook.author, selectedBook.title, selectedBook.book_id, selectedBook.thumbnail_url, selectedBook.summary]
+  let sqlArray = [selectedBook.author, selectedBook.title, specificBookId, selectedBook.thumbnail, selectedBook.summary]
 
-  client.query(sql, sqlArray).then(result => {
-    
+  client.query(sql, sqlArray).then(sqlResults => {
+    let sqlResponse = sqlResults.rows;
+    response.render('pages/detail', {sqlResults:[selectedBook]});
+  }).catch(error => {
+    handleError(error, response)
   })
-
 }
 
 
