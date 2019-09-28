@@ -50,11 +50,11 @@ app.post('/books/:id', saveBook)
 // ====== Constructor Function =======/
 
 function Book(info){
-  this.title = info.volumeInfo.title || 'Title not available'
-  this.author = info.volumeInfo.authors || 'Author not available'
-  this.summary = info.volumeInfo.description || 'No description provided'
-  this.thumbnail=info.volumeInfo.imageLinks.thumbnail || 'https://i.imgur.com/J5LVHEL.jpg';
-  this.book_id = info.id
+  this.title = info.volumeInfo.title ? info.volumeInfo.title : 'Title not available';
+  this.author = info.volumeInfo.authors ? info.volumeInfo.authors : 'Author not available';
+  this.summary = info.volumeInfo.description ? info.volumeInfo.description : 'No description provided';
+  this.thumbnail= info.volumeInfo.imageLinks.thumbnail ? info.volumeInfo.imageLinks.thumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
+  this.book_id = info.id;
 }
 
 
@@ -98,6 +98,7 @@ function searchForBook(request, response){
           return book
         }
       })
+      console.log(formattedBooks[0].thumbnail);
       // console.log('results include: ', formattedBooks)
       console.log('total results: ',formattedBooks.length)
       response.render('./pages/searches/show', {books:formattedBooks})
@@ -150,7 +151,8 @@ function saveBook(request, response){
 
   client.query(sql, sqlArray).then(sqlResults => {
     let sqlResponse = sqlResults.rows;
-    response.render('pages/detail', {sqlResults:[selectedBook]});
+    response.redirect('/');
+    // response.render('pages/detail', {sqlResults:[selectedBook]});
   }).catch(error => {
     handleError(error, response)
   })
