@@ -1,29 +1,28 @@
-
-    <head>
-        <link rel="stylesheet" type="text/css" href="/styles/reset.css">
-        <link rel="stylesheet" type="text/css" href="/styles/nothing.css">
-    </head>
-    <section>
-        <h1>Best Books!</h1>
-        <form action id= "formaction" ="/searches" method="post">
-            <div id="search">Search book by Title or Author</div><br>
-            <input type id= "input" ="text" name="search" placeholder ="Enter title or author" required>
-            <fieldset>
-                <label for="title">
-                    <div id="test1">
-                        <span>Title</span>
-                        <input type ="radio" name="search" value="title" required>
-                    </div>
-                </label>
-            </fieldset>
-            <fieldset>
-                <label for="author">
-                    <div id="test2">
-                        <span>Author</span>
-                        <input type ="radio" name="search" value="author" required>
-                    </div>
-                </label>
-            </fieldset>
-            <button id= "b1" type="submit">Search Book</button>
-        </form>
-    </section>
+<head>
+    <link rel="stylesheet" type="text/css" href="/styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="/styles/nothing.css">
+</head>
+<section>
+    <h1>Best Books!</h1>
+    <form id="formaction" action ="/searches" method="post">
+        <div id="search">Search book by Title or Author</div><br>
+        <input id="input" type ="text" name="search" placeholder="Enter title or author" required>
+        <fieldset>
+            <label for="title">
+                <div id="test1">
+                    <span>Title</span>
+                    <input type="radio" name="search" value="title" required>
+                </div>
+            </label>
+        </fieldset>
+        <fieldset>
+            <label for="author">
+                <div id="test2">
+                    <span>Author</span>
+                    <input type="radio" name="search" value="author" required>
+                </div>
+            </label>
+        </fieldset>
+        <button id="b1" type="submit">Search Book</button>
+    </form>
+</section>
