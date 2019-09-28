@@ -19,10 +19,24 @@ client.on('error', err => console.error(err));
 
 // ======= MiddleWare =========//
 app.use(express.urlencoded({extended: true}));
+const methodOverride  = require('method-override');
+app.use(methodOverride((request, response) => {
+  if(request.body && typeof request.body === 'object' && '_method' in request.body){
+    let method = request.body._method;
+    delete request.body._method;
+    return method;
+  }
+}));
+
 
 
 //==== app.listen =========//
 app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
+
+
+
+
+
 
 
 //===== Routes =======//
@@ -31,7 +45,13 @@ app.get('/', showSaved)
 app.get('/search', search)
 //searches route displays search results.
 app.post('/searches', searchForBook)
-app.post('/books/:id', saveBook)
+app.post('/books/save/:id', saveBook)
+app.post('/books/details/:id', detailView)
+app.post('/books/update_book/:id', updateBook)
+app.delete('/books/delete_book/:id', deleteBook)
+
+
+
 
 
 //catch for all un-specified route requests
@@ -55,6 +75,19 @@ function Book(info){
   this.summary = info.volumeInfo.description ? info.volumeInfo.description : 'No description provided';
   this.thumbnail= info.volumeInfo.imageLinks.thumbnail ? info.volumeInfo.imageLinks.thumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
   this.book_id = info.id;
+  this.bookshelf = 'Please enter desired category'
+}
+
+
+
+
+
+// ===== Callback Functions for Routes ======//
+
+function deleteBook (request, response){
+  const id = request.params.id;
+  client.query('delete from books where book_id=$1;', [id]);
+  response.redirect('/');
 }
 
 
@@ -62,7 +95,27 @@ function Book(info){
 
 
 
-// ===== Callback Functions for Routes ======//
+function updateBook(request, response){
+  const id = request.params.id;
+  const specificBook = request.body;
+  let sql = `UPDATE books SET title=$2, author=$3, summary=$4, bookshelf=$5 WHERE book_id=$1`;
+  let sqlArr = [id, specificBook.title,specificBook.author,specificBook.summary,specificBook.bookshelf];
+
+  client.query(sql, sqlArr)
+  response.redirect('/');
+
+
+
+
+
+}
+
+
+
+
+
+
+
 function search(request, response){
   response.render('./pages/searches/new')
     .catch(error => {
@@ -98,7 +151,6 @@ function searchForBook(request, response){
           return book
         }
       })
-      console.log(formattedBooks[0].thumbnail);
       // console.log('results include: ', formattedBooks)
       console.log('total results: ',formattedBooks.length)
       response.render('./pages/searches/show', {books:formattedBooks})
@@ -121,22 +173,26 @@ function showSaved(request, response) {
 
 
 //show detailed page for specified book id
-function specificBook(request, response) {
+function detailView(request, response) {
   let sql = 'SELECT * FROM books WHERE book_id = $1;';
-  console.log('the params is: ', request.params);
+// console.log('im here')
+
+  // console.log('the params is: ', request.params);
   let values = [request.params.id];
 
   return client.query(sql, values).then(result => {
-    console.log('result is: ', result)
+    // console.log('result is: ', result)
     let tempArr = [];
     tempArr.push(result.rows[0])
-    console.log('tempArr is: ', tempArr)
+    // console.log('tempArr is: ', tempArr)
     response.render('pages/detail', { sqlResults: tempArr })
   })
     .catch(error => {
       handleError(error, response)
     })
 }
+
+
 
 //save targetted book (from results) to database
 function saveBook(request, response){

@@ -1,9 +1,37 @@
 <% sqlResults.forEach(value => { %>
     <ul>
-        <img src = "<%= value.thumbnail%>">
+        <img src = "<%= value.image_url%>">
         <li><%= value.title %> </li>
         <li><%= value.author %> </li>
         <li><%= value.summary %> </li>
+        <form action=""></form>
         <li><%= value.book_id %> </li>
     </ul>
+
+    <form id="save-book" action="/books/update_book/<%=value.book_id %>" method="POST">
+        <fieldset>
+          <input type="hidden" name="thumbnail" value="<%= value.thumbnail %>" >
+          <input type="hidden" name="book_id" value="<%= value.book_id %>" >
+          <input type="text" name="title" value="<%= value.title %>" >
+          <input type="text" name="author" value="<%= value.author %>" >
+          <input type="text" name="summary" value="<%= value.summary %>" >
+          <input type="text" name="bookshelf" value="<%= value.bookshelf %>" >
+    
+          <input type="submit" value ='Add to library' >
+        </fieldset>
+      </form>  
+
+      <form id="delete-form" action="/books/delete_book/<%=value.book_id %>" method="POST">
+        <fieldset>
+          <input type="hidden" name="book_id" value="<%= value.book_id %>" > 
+          <input type="hidden" name="_method" value="DELETE">
+          <button>
+              Remove from library
+          </button>         
+        </fieldset>
+
+      </form>
+
+
+
     <% }) %>

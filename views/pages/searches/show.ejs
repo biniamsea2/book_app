@@ -17,7 +17,7 @@
   </ul>
   
 
-  <form id="save-book" action="/books/<%=value.book_id %>" method="POST">
+  <form id="save-book" action="/books/save/<%=value.book_id %>" method="POST">
     <fieldset>
       <input type="hidden" name="thumbnail" value="<%= value.thumbnail %>" >
       <input type="hidden" name="book_id" value="<%= value.book_id %>" >
