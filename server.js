@@ -32,15 +32,15 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 
 //===== Routes =======//
 // need to create link to /search
-app.get('/search', search)
 app.get('/', showSaved)
+app.get('/search', search)
 app.post('/searches', searchForBook)
 app.get('/books/:id', specificBook)
 app.post('/add/:id', saveBook)
 
 
 //catch for all un-specified route requests
-app.get('*', catchAll)
+app.use('*', catchAll)
 
 
 
@@ -73,7 +73,6 @@ function search(request, response){
 }
 
 function searchForBook(request, response){
-  // console.log(request.body)
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
   console.log(request.body.search)
   const searchingby = request.body.search[1];
@@ -116,7 +115,7 @@ function showSaved(request, response) {
   client.query(sql)
     .then(sqlResults => {
       let sqlResponse = sqlResults.rows;
-      response.render('./pages/index', {sqlKey:sqlResponse});
+      response.render('./pages/index', { sqlKey: sqlResponse });
     })
 }
 
@@ -169,5 +168,7 @@ function handleError(error, response){
 
 //==== Catch -All =====/
 function catchAll(request, response) {
+  console.log('inside search')
+
   response.render('./pages/error')
 }
