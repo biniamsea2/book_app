@@ -36,7 +36,7 @@ app.post('/add/:id', saveBook)
 
 
 //catch for all un-specified route requests
-app.use('*', catchAll)
+// app.use('*', catchAll)
 
 
 
