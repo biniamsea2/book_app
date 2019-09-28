@@ -72,7 +72,6 @@ function search(request, response){
 }
 
 function searchForBook(request, response){
-  // console.log('WE ARE HERE !!!!!!!!!!!!!!!!!!!!!!!')
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
   console.log(request.body.search)
   const searchingby = request.body.search[1];
@@ -170,5 +169,7 @@ function handleError(error, response){
 
 //==== Catch -All =====/
 function catchAll(request, response) {
+  console.log('inside search')
+
   response.render('./pages/error')
 }
