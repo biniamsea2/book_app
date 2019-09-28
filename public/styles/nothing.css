@@ -1,29 +1,60 @@
-    h1{
-        background: black;
-        color: black;
-        font-size: 30px;
+body{
+    background: rgb(0, 0, 0);
+
+   }
+   
+/* Best books    */
+h1{
+    font-family: 'Courier New', Courier, monospace;
+   background: black;
+   color: white;
+   font-size: 30px;
+   margin-left: 11.8em;
+   margin-top: 30px;
+   margin-bottom: 10px;
     }
 
 li{
     color:blue;
 }
 
-h1{
+/* h1{
     color: white;
     padding:20px;
-}
+} */
+
+
 
 #formaction{
-    color:white;
-    background:grey;
+    background: grey;
+    width: 50em;
+    margin-left: 25%;
+    height: 40em;
+    border-radius: 5px;
 }
 
+
+
+/* Top part search by title or aurthor */
+#search{
+    color:white;
+    font-size: 30px;
+    background: rgb(61, 61, 61);
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    width: 26em;
+    border-radius: 5px;
+    z-index: 2;
+    padding: 10px;
+}
+
+/* Enter title or author */
 #input{
     color:black;
-    margin-left: 18em;
-    margin-top: 5px;
+    margin-left: 7em;
+    margin-top: 40px;
     font-size: 30px;
-    margin-bottom: 20px;
     border-radius: 5px;
     height:50px;
     padding-left: 15px;
@@ -33,21 +64,17 @@ h1{
 
 }
 
-/* ignore for now */
-#search{
-    color:black;
-}
 
-
+/* Title */
 #test1{
-    margin-left:18em;
+    margin-left: 7em;    
     border:2px solid white;
     /* display: inline; */
     background: white;
     color: grey;
-    width: 12.3em;
+    width: 12.39em;
     height: 50px;
-    margin-bottom: 20px;
+    margin-top: 40px;
     line-height: 50px;
     font-size: 30px;
     border-radius: 5px;
@@ -56,16 +83,16 @@ h1{
     
     
 }
-
+/* Author */
 #test2{
-    margin-left:18em;
+    margin-left: 7em;    
     border:2px solid white;
     /* display: inline; */
     background: white;
     color: grey;
-    width: 12.3em;
+    width: 12.39em;
     height: 50px;
-    margin-bottom: 20px;
+    margin-top: 40px;
     line-height: 50px;
     font-size: 30px;
     border-radius: 5px;
@@ -74,6 +101,7 @@ h1{
     
     
 }
+/* Search book button */
 #b1{
     color: white;
     background: black;
@@ -81,7 +109,9 @@ h1{
     height: 50px;
     width: 200px;
     font-size: 20px;
-    margin-left: 36.5em;
+    margin-left: 20.2em;
+    margin-top: 40px;
+    
 
 }
 
