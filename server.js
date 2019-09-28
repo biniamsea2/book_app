@@ -2,19 +2,14 @@
 
 // ==== Dependancies =====//
 const express = require('express');
+const superagent = require('superagent');
+const pg = require('pg');
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 3001;
-const cors = require('cors');
-const superagent = require('superagent');
-const pg = require('pg');
-app.use(cors());
+app.set('view engine', 'ejs');
 app.use(express.static('public'));
 require('ejs');
-app.set('view engine', 'ejs');
-
-
-
 
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
@@ -31,16 +26,17 @@ app.listen(PORT, () => {console.log(`listening on ${PORT}`)});
 
 
 //===== Routes =======//
-// need to create link to /search
-app.get('/search', search)
 app.get('/', showSaved)
+//search will display home page.
+app.get('/search', search)
+//searches route displays search results.
 app.post('/searches', searchForBook)
 app.get('/books/:id', specificBook)
 app.post('/add/:id', saveBook)
 
 
 //catch for all un-specified route requests
-app.get('*', catchAll)
+app.use('*', catchAll)
 
 
 
@@ -55,10 +51,10 @@ app.get('*', catchAll)
 // ====== Constructor Function =======/
 
 function Book(info){
-  this.title = info.volumeInfo.title;
-  this.author = info.volumeInfo.authors[0];
-  this.summary = info.volumeInfo.summary;
-  this.thumbnail=info.volumeInfo.imageLinks.thumbnail;
+  this.title = info.volumeInfo.title || 'Title not available'
+  this.author = info.volumeInfo.authors[0] || 'Author not available'
+  this.summary = info.volumeInfo.summary || 'No description provided'
+  this.thumbnail=info.volumeInfo.imageLinks.thumbnail || 'https://i.imgur.com/J5LVHEL.jpg';
   this.book_id = info.id
 }
 
@@ -70,10 +66,13 @@ function Book(info){
 // ===== Callback Functions for Routes ======//
 function search(request, response){
   response.render('./pages/searches/new')
+    .catch(error => {
+      handleError(error, response)
+    })
 }
 
 function searchForBook(request, response){
-  // console.log(request.body)
+  // console.log('WE ARE HERE !!!!!!!!!!!!!!!!!!!!!!!')
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
   console.log(request.body.search)
   const searchingby = request.body.search[1];
@@ -87,7 +86,6 @@ function searchForBook(request, response){
   }
   //testing api request
   console.log(url)
-
   //Now superagent uses the formatted url for api request
   superagent.get(url)
     .then(result => {
@@ -106,19 +104,22 @@ function searchForBook(request, response){
       console.log('total results: ',formattedBooks.length)
       response.render('./pages/searches/show', {books:formattedBooks})
     }).catch(error => {
-      console.error(error)
-      response.redirect('*')
+      handleError(error, response)
     })
 }
 
 function showSaved(request, response) {
+  console.log('I am inside of ShowSaved')
   let sql = `SELECT * FROM books;`;
-  client.query(sql)
-    .then(sqlResults => {
-      let sqlResponse = sqlResults.rows;
-      response.render('./pages/index', {sqlKey:sqlResponse});
+  //difference
+  return client.query(sql).then(sqlResults => response.render('pages/index', {sqlKey:sqlResults.rows}))
+    .catch(error => {
+      handleError(error, response)
     })
 }
+
+
+
 
 //show detailed page for specified book id
 function specificBook(request, response) {
