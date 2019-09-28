@@ -1,4 +1,4 @@
-body {
+h1 {
     animation: colorchange 1s infinite;
     -webkit-animation: colorchange 1s inifintite;
 }
@@ -10,6 +10,6 @@ body {
     75%  {background: green;}
     100% {background: red;}
 }
-h1{
+/* h1{
     color:colorchange 2s infinite;
-}
+} */
