@@ -175,7 +175,6 @@ function showSaved(request, response) {
 //show detailed page for specified book id
 function detailView(request, response) {
   let sql = 'SELECT * FROM books WHERE book_id = $1;';
-// console.log('im here')
 
   // console.log('the params is: ', request.params);
   let values = [request.params.id];
