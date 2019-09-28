@@ -31,8 +31,7 @@ app.get('/', showSaved)
 app.get('/search', search)
 //searches route displays search results.
 app.post('/searches', searchForBook)
-app.get('/books/:id', specificBook)
-app.post('/add/:id', saveBook)
+app.post('/books/:id', saveBook)
 
 
 //catch for all un-specified route requests
@@ -52,8 +51,8 @@ app.post('/add/:id', saveBook)
 
 function Book(info){
   this.title = info.volumeInfo.title || 'Title not available'
-  this.author = info.volumeInfo.authors[0] || 'Author not available'
-  this.summary = info.volumeInfo.summary || 'No description provided'
+  this.author = info.volumeInfo.authors || 'Author not available'
+  this.summary = info.volumeInfo.description || 'No description provided'
   this.thumbnail=info.volumeInfo.imageLinks.thumbnail || 'https://i.imgur.com/J5LVHEL.jpg';
   this.book_id = info.id
 }
@@ -123,11 +122,11 @@ function showSaved(request, response) {
 //show detailed page for specified book id
 function specificBook(request, response) {
   let sql = 'SELECT * FROM books WHERE book_id = $1;';
-  // console.log('the params is: ', request.params);
+  console.log('the params is: ', request.params);
   let values = [request.params.id];
 
   return client.query(sql, values).then(result => {
-    // console.log('result is: ', result.rows[0])
+    console.log('result is: ', result)
     let tempArr = [];
     tempArr.push(result.rows[0])
     console.log('tempArr is: ', tempArr)
