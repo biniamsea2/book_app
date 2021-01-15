@@ -73,7 +73,9 @@ function Book(info){
   this.title = info.volumeInfo.title ? info.volumeInfo.title : 'Title not available';
   this.author = info.volumeInfo.authors ? info.volumeInfo.authors : 'Author not available';
   this.summary = info.volumeInfo.description ? info.volumeInfo.description : 'No description provided';
-  this.thumbnail= info.volumeInfo.imageLinks.thumbnail ? info.volumeInfo.imageLinks.thumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
+  this.thumbnail= 
+  // info.volumeInfo.imageLinks.thumbnail ? info.volumeInfo.imageLinks.thumbnail : 
+  'https://i.imgur.com/J5LVHEL.jpg';
   this.book_id = info.id;
   this.bookshelf = 'Please enter desired category'
 }
@@ -125,7 +127,7 @@ function search(request, response){
 
 function searchForBook(request, response){
   let url = `https://www.googleapis.com/books/v1/volumes?q=`;
-  console.log(request.body.search)
+  // console.log(request.body.search)
   const searchingby = request.body.search[1];
   const searchingFor = request.body.search[0]
   if(searchingby === 'title'){
@@ -136,13 +138,13 @@ function searchForBook(request, response){
     url += query;
   }
   //testing api request
-  console.log(url)
+  // console.log(url)
   //Now superagent uses the formatted url for api request
   superagent.get(url)
     .then(result => {
-      console.log('got results')
+      // console.log('got results')
       const bookResults = result.body.items;
-      console.log('received ', bookResults.length, ' results')
+      // console.log('received ', bookResults.length, ' results')
       const formattedBooks = bookResults.splice(0, 10).map(banana => {
 
         const regex = /^(https)\S*/gi
@@ -152,7 +154,7 @@ function searchForBook(request, response){
         }
       })
       // console.log('results include: ', formattedBooks)
-      console.log('total results: ',formattedBooks.length)
+      // console.log('total results: ',formattedBooks.length)
       response.render('./pages/searches/show', {books:formattedBooks})
     }).catch(error => {
       handleError(error, response)
@@ -178,6 +180,7 @@ function detailView(request, response) {
 
   // console.log('the params is: ', request.params);
   let values = [request.params.id];
+  console.log('Inside detailView, values are: \n', values)
 
   return client.query(sql, values).then(result => {
     // console.log('result is: ', result)
@@ -197,16 +200,19 @@ function detailView(request, response) {
 function saveBook(request, response){
   const selectedBook = request.body
   const specificBookId = request.params.id;
-  console.log('specificBookId is: ',specificBookId)
+  const boko_id = selectedBook.book_id;
+  // console.log(selectedBook)
+  // console.log('specificBookId is: ',specificBookId)
+  console.log('Attempting to save book')
   // console.log(selectedBook.book_id)
-  // console.log('Attempting to save book')
-  console.log('things received: ',selectedBook)
+  // console.log('things received: ',selectedBook)
   let sql='INSERT INTO books (author, title, book_id, image_url, summary) VALUES ($1, $2, $3, $4, $5);';
-  let sqlArray = [selectedBook.author, selectedBook.title, specificBookId, selectedBook.thumbnail, selectedBook.summary]
+  let sqlArray = [selectedBook.author, selectedBook.title, boko_id, selectedBook.thumbnail, selectedBook.summary]
 
   client.query(sql, sqlArray).then(sqlResults => {
     let sqlResponse = sqlResults.rows;
-    response.redirect('/');
+    response.redirect('/', sqlResponse);
+    console.log('Line 211')
     // response.render('pages/detail', {sqlResults:[selectedBook]});
   }).catch(error => {
     handleError(error, response)

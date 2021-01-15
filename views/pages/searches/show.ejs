@@ -7,23 +7,24 @@
   <h1>Book Results</h1>
   <p><a href="/">Home</a></p>
   <ul>
-    <% books.forEach(value => { %>
-    <img src = "<%= value.thumbnail%>"> 
-    <li><%= value.title %></li>
-    <li><%= value.author %></li>
-    <li><%= value.summary %></li>
+    <% books.forEach(eachBook => { %>
+    <img src = "<%= eachBook.thumbnail%>"> 
+    <li><%= eachBook.title %></li>
+    <li><%= eachBook.author %></li>
+    <li><%= eachBook.summary %></li>
 
 
   </ul>
   
 
-  <form id="save-book" action="/books/save/<%=value.book_id %>" method="POST">
+  <form id="save-book" action="/books/save/<%= eachBook.book_id %>" method="POST">
+    '/books/details/:id
     <fieldset>
-      <input type="hidden" name="thumbnail" value="<%= value.thumbnail %>" >
-      <input type="hidden" name="book_id" value="<%= value.book_id %>" >
-      <input type="hidden" name="title" value="<%= value.title %>" >
-      <input type="hidden" name="author" value="<%= value.author %>" >
-      <input type="hidden" name="summary" value="<%= value.summary %>" >
+      <input type="hidden" name="thumbnail" value="<%= eachBook.thumbnail %>" >
+      <input type="hidden" name="book_id" value="<%= eachBook.book_id %>" >
+      <input type="hidden" name="title" value="<%= eachBook.title %>" >
+      <input type="hidden" name="author" value="<%= eachBook.author %>" >
+      <input type="hidden" name="summary" value="<%= eachBook.summary %>" >
 
       <input type="submit" value ='Add to library' >
     </fieldset>
